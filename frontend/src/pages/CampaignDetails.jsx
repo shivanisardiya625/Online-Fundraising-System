@@ -1,6 +1,7 @@
 import { useState, useEffect, useContext } from 'react'
 import { useParams } from 'react-router-dom'
 import { AuthContext } from '../context/AuthContext'
+import API_BASE from '../config/api'
 
 const CampaignDetails = () => {
   const { id } = useParams()
@@ -20,7 +21,7 @@ const CampaignDetails = () => {
 
   const fetchCampaign = async () => {
     try {
-      const res = await fetch(`/api/campaigns/${id}`)
+      const res = await fetch(`${API_BASE}/api/campaigns/${id}`)
       const data = await res.json()
       setCampaign(data.campaign)
       setDonations(data.donations || [])
@@ -44,7 +45,7 @@ const CampaignDetails = () => {
     }
 
     try {
-      const res = await fetch('/api/donations', {
+      const res = await fetch(`${API_BASE}/api/donations`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -77,7 +78,7 @@ const CampaignDetails = () => {
     if (!confirm('Are you sure you want to delete this campaign?')) return
 
     try {
-      const res = await fetch(`/api/campaigns/${id}`, {
+      const res = await fetch(`${API_BASE}/api/campaigns/${id}`, {
         method: 'DELETE',
         headers: {
           Authorization: `Bearer ${token}`
@@ -243,39 +244,31 @@ const CampaignDetails = () => {
                     type="number"
                     value={donateAmount}
                     onChange={(e) => setDonateAmount(e.target.value)}
-                    className="w-full px-4 py-3 border-2 border-white/30 rounded-xl bg-white/10 text-white placeholder-white/50 focus:outline-none focus:border-white"
+                    className="w-full px-4 py-3 border-2 border-white/30 rounded-xl bg-white/10 text-white placeholder-white/50 focus:outline-none focus:border-white transition-colors"
                     placeholder="Enter amount"
                     required
                     min="1"
                   />
                 </div>
 
-                <div className="mb-4">
+                <div className="mb-6">
                   <label className="block text-white/80 font-semibold mb-2">Message (optional)</label>
                   <textarea
                     value={donateMessage}
                     onChange={(e) => setDonateMessage(e.target.value)}
-                    className="w-full px-4 py-3 border-2 border-white/30 rounded-xl bg-white/10 text-white placeholder-white/50 focus:outline-none focus:border-white h-20"
-                    placeholder="Say something encouraging..."
+                    className="w-full px-4 py-3 border-2 border-white/30 rounded-xl bg-white/10 text-white placeholder-white/50 focus:outline-none focus:border-white transition-colors h-24"
+                    placeholder="Leave a message..."
                   ></textarea>
                 </div>
 
                 <button
                   type="submit"
                   disabled={donating}
-                  className="w-full bg-white text-blue-600 py-3 rounded-xl font-bold hover:bg-gray-100 transition-colors disabled:opacity-50"
+                  className="w-full bg-white text-blue-600 py-3 rounded-xl font-bold hover:bg-gray-100 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   {donating ? '⏳ Processing...' : '💝 Donate Now'}
                 </button>
               </form>
-            </div>
-          )}
-
-          {!user && (
-            <div className="bg-blue-600 rounded-3xl shadow-lg p-6 text-white text-center">
-              <div className="text-5xl mb-4">🔐</div>
-              <p className="text-lg font-semibold mb-2">Login to Donate</p>
-              <p className="text-white/80">Make a difference by supporting this campaign</p>
             </div>
           )}
         </div>

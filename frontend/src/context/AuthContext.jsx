@@ -1,4 +1,5 @@
 import { createContext, useState, useEffect } from 'react'
+import API_BASE from '../config/api'
 
 export const AuthContext = createContext()
 
@@ -17,7 +18,7 @@ export const AuthProvider = ({ children }) => {
 
   const fetchUser = async () => {
     try {
-      const res = await fetch('/api/auth/me', {
+      const res = await fetch(`${API_BASE}/api/auth/me`, {
         headers: {
           Authorization: `Bearer ${token}`
         }
@@ -37,7 +38,7 @@ export const AuthProvider = ({ children }) => {
   }
 
   const login = async (email, password) => {
-    const res = await fetch('/api/auth/login', {
+    const res = await fetch(`${API_BASE}/api/auth/login`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -55,7 +56,7 @@ export const AuthProvider = ({ children }) => {
   }
 
   const register = async (name, email, password) => {
-    const res = await fetch('/api/auth/register', {
+    const res = await fetch(`${API_BASE}/api/auth/register`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'

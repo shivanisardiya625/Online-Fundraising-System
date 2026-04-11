@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import CampaignCard from '../components/CampaignCard'
+import API_BASE from '../config/api'
 
 const Home = () => {
   const [campaigns, setCampaigns] = useState([])
@@ -11,7 +12,7 @@ const Home = () => {
 
   const fetchCampaigns = async () => {
     try {
-      const res = await fetch('/api/campaigns')
+      const res = await fetch(`${API_BASE}/api/campaigns`)
       const data = await res.json()
       setCampaigns(data)
     } catch (error) {
@@ -36,7 +37,6 @@ const Home = () => {
     <div>
       {/* Hero Section */}
       <div className="relative mb-12 rounded-3xl overflow-hidden">
-        {/* Background Image */}
         <div className="absolute inset-0">
           <img 
             src="https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?w=1200&h=600&fit=crop" 

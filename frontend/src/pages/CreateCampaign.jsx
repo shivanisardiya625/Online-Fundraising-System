@@ -1,6 +1,7 @@
 import { useState, useContext } from 'react'
 import { AuthContext } from '../context/AuthContext'
 import { useNavigate } from 'react-router-dom'
+import API_BASE from '../config/api'
 
 const CreateCampaign = () => {
   const [formData, setFormData] = useState({
@@ -25,7 +26,7 @@ const CreateCampaign = () => {
     setLoading(true)
 
     try {
-      const res = await fetch('/api/campaigns', {
+      const res = await fetch(`${API_BASE}/api/campaigns`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -52,11 +53,9 @@ const CreateCampaign = () => {
 
   return (
     <div className="min-h-screen py-12 px-4">
-      {/* Background */}
       <div className="absolute inset-0 bg-blue-600 -z-10"></div>
       
       <div className="max-w-2xl mx-auto">
-        {/* Card */}
         <div className="bg-white rounded-3xl shadow-2xl p-8">
           <div className="text-center mb-8">
             <div className="text-6xl mb-4">🎯</div>

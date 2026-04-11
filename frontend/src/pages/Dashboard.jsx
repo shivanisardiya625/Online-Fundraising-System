@@ -1,6 +1,7 @@
 import { useState, useEffect, useContext } from 'react'
 import { AuthContext } from '../context/AuthContext'
 import { Link, useNavigate } from 'react-router-dom'
+import API_BASE from '../config/api'
 
 const Dashboard = () => {
   const [myCampaigns, setMyCampaigns] = useState([])
@@ -24,12 +25,11 @@ const Dashboard = () => {
         'Content-Type': 'application/json'
       }
       
-      // Fixed: use /my-campaigns instead of /user
-      const campaignsRes = await fetch('/api/campaigns/my-campaigns', { headers })
+      const campaignsRes = await fetch(`${API_BASE}/api/campaigns/my-campaigns`, { headers })
       const campaignsData = await campaignsRes.json()
       setMyCampaigns(Array.isArray(campaignsData) ? campaignsData : [])
 
-      const donationsRes = await fetch('/api/donations/my-donations', { headers })
+      const donationsRes = await fetch(`${API_BASE}/api/donations/my-donations`, { headers })
       const donationsData = await donationsRes.json()
       setMyDonations(Array.isArray(donationsData) ? donationsData : [])
     } catch (error) {
