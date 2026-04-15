@@ -30,6 +30,14 @@ frontend/dist/
 # backend
 backend/node_modules/
 
-dist/
-build/
+
+# env files
 .env
+frontend/.env
+backend/.env
+ 
+
+frontend/dist/
+
+build/
+  
