@@ -12,15 +12,13 @@ connectDB();
 const app = express();
 
 // Middleware
-app.use(cors());
+// app.use(cors());
 
-const cors = require("cors");
 
 app.use(cors({
-  origin: "https://online-fundraising-system-dun.vercel.app/",
+  origin: "https://online-fundraising-system-dun.vercel.app",
   credentials: true
 }));
-
 app.use(express.json());
 
 // Routes
