@@ -17,7 +17,7 @@ app.use(cors());
 const cors = require("cors");
 
 app.use(cors({
-  origin: "https://online-fundraising-system.onrender.com",
+  origin: "https://online-fundraising-system-dun.vercel.app/",
   credentials: true
 }));
 
