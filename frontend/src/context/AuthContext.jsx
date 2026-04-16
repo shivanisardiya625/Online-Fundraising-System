@@ -37,41 +37,101 @@ export const AuthProvider = ({ children }) => {
     }
   }
 
+  // const login = async (email, password) => {
+  //   const res = await fetch(`${API_BASE}/api/auth/login`, {
+  //     method: 'POST',
+  //     headers: {
+  //       'Content-Type': 'application/json'
+  //     },
+  //     body: JSON.stringify({ email, password })
+  //   })
+  //   const data = await res.json()
+  //   if (res.ok) {
+  //     localStorage.setItem('token', data.token)
+  //     setToken(data.token)
+  //     setUser(data.user)
+  //     return { success: true }
+  //   }
+  //   return { success: false, message: data.message }
+  // }
+
   const login = async (email, password) => {
+  try {
     const res = await fetch(`${API_BASE}/api/auth/login`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({ email, password })
-    })
-    const data = await res.json()
+    });
+
+    const text = await res.text(); // 👈 change
+    const data = text ? JSON.parse(text) : {}; // 👈 safe parse
+
     if (res.ok) {
-      localStorage.setItem('token', data.token)
-      setToken(data.token)
-      setUser(data.user)
-      return { success: true }
+      localStorage.setItem('token', data.token);
+      setToken(data.token);
+      setUser(data.user);
+      return { success: true };
     }
-    return { success: false, message: data.message }
+
+    return { success: false, message: data.message || "Login failed" };
+
+  } catch (error) {
+    console.error("Login Error:", error);
+    return { success: false, message: "Server error" };
   }
+};
+
+
+
+  // const register = async (name, email, password) => {
+  //   const res = await fetch(`${API_BASE}/api/auth/register`, {
+  //     method: 'POST',
+  //     headers: {
+  //       'Content-Type': 'application/json'
+  //     },
+  //     body: JSON.stringify({ name, email, password })
+  //   })
+  //   const data = await res.json()
+  //   if (res.ok) {
+  //     localStorage.setItem('token', data.token)
+  //     setToken(data.token)
+  //     setUser(data.user)
+  //     return { success: true }
+  //   }
+  //   return { success: false, message: data.message }
+  // }
+
 
   const register = async (name, email, password) => {
+  try {
     const res = await fetch(`${API_BASE}/api/auth/register`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({ name, email, password })
-    })
-    const data = await res.json()
+    });
+
+    const text = await res.text();
+    const data = text ? JSON.parse(text) : {};
+
     if (res.ok) {
-      localStorage.setItem('token', data.token)
-      setToken(data.token)
-      setUser(data.user)
-      return { success: true }
+      localStorage.setItem('token', data.token);
+      setToken(data.token);
+      setUser(data.user);
+      return { success: true };
     }
-    return { success: false, message: data.message }
+
+    return { success: false, message: data.message || "Register failed" };
+
+  } catch (error) {
+    console.error("Register Error:", error);
+    return { success: false, message: "Server error" };
   }
+};
+
 
   const logout = () => {
     localStorage.removeItem('token')

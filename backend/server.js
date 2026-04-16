@@ -14,11 +14,27 @@ const app = express();
 // Middleware
 // app.use(cors());
 
+const allowedOrigins = [
+  "http://localhost:3000",
+  "https://online-fundraising-system-dun.vercel.app"
+];
 
 app.use(cors({
-  origin: "https://online-fundraising-system-dun.vercel.app",
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
   credentials: true
 }));
+
+// app.use(cors({
+//   origin: "https://online-fundraising-system-dun.vercel.app",
+//   credentials: true
+// }));
+
 app.use(express.json());
 
 // Routes
