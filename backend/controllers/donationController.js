@@ -54,6 +54,21 @@ const getMyDonations = async (req, res) => {
   }
 };
 
+// @route   GET /api/donations/stats
+// @desc    Get total raised and total donors
+// @access  Public
+const getStats = async (req, res) => {
+  try {
+    const result = await Donation.aggregate([
+      { $group: { _id: null, totalRaised: { $sum: '$amount' }, totalDonors: { $addToSet: '$donor' } } }
+    ]);
+    const stats = result[0] || { totalRaised: 0, totalDonors: [] };
+    res.json({ totalRaised: stats.totalRaised, totalDonors: stats.totalDonors.length });
+  } catch (error) {
+    res.status(500).json({ message: 'Server error' });
+  }
+};
+
 // @route   GET /api/donations/campaign/:campaignId
 // @desc    Get donations for a campaign
 // @access  Public
@@ -72,5 +87,6 @@ const getCampaignDonations = async (req, res) => {
 module.exports = {
   makeDonation,
   getMyDonations,
-  getCampaignDonations
+  getCampaignDonations,
+  getStats
 };

@@ -16,7 +16,7 @@ const app = express();
 
 const allowedOrigins = [
   "http://localhost:3000",
-  "https://online-fundraising-system-dun.vercel.app"
+  // "https://online-fundraising-system-dun.vercel.app"
 ];
 
 app.use(cors({

@@ -1,7 +1,12 @@
 const express = require('express');
 const router = express.Router();
-const { makeDonation, getMyDonations, getCampaignDonations } = require('../controllers/donationController');
+const { makeDonation, getMyDonations, getCampaignDonations, getStats } = require('../controllers/donationController');
 const auth = require('../middleware/auth');
+
+// @route   GET /api/donations/stats
+// @desc    Get total raised and donors
+// @access  Public
+router.get('/stats', getStats);
 
 // @route   POST /api/donations
 // @desc    Make a donation

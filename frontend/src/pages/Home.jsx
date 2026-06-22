@@ -5,10 +5,22 @@ import API_BASE from '../config/api'
 const Home = () => {
   const [campaigns, setCampaigns] = useState([])
   const [loading, setLoading] = useState(true)
+  const [stats, setStats] = useState({ totalRaised: 0, totalDonors: 0 })
 
   useEffect(() => {
     fetchCampaigns()
+    fetchStats()
   }, [])
+
+  const fetchStats = async () => {
+    try {
+      const res = await fetch(`${API_BASE}/api/donations/stats`)
+      const data = await res.json()
+      setStats(data)
+    } catch (error) {
+      console.error('Error fetching stats:', error)
+    }
+  }
 
   const fetchCampaigns = async () => {
     try {
@@ -59,11 +71,11 @@ const Home = () => {
               <p className="text-sm">Active Campaigns</p>
             </div>
             <div className="bg-white/20 backdrop-blur-sm rounded-xl px-6 py-3">
-              <span className="text-3xl font-bold">$0</span>
+              <span className="text-3xl font-bold">${stats.totalRaised.toLocaleString()}</span>
               <p className="text-sm">Total Raised</p>
             </div>
             <div className="bg-white/20 backdrop-blur-sm rounded-xl px-6 py-3">
-              <span className="text-3xl font-bold">0</span>
+              <span className="text-3xl font-bold">{stats.totalDonors}</span>
               <p className="text-sm">Total Donors</p>
             </div>
           </div>

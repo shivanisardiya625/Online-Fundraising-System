@@ -1,7 +1,10 @@
 {
   "name": "fundraising-backend",
   "version": "1.0.0",
-  "description for Online Fundraising": "Backend System",
+  "description": "",
+  "license": "ISC",
+  "author": "",
+  "type": "commonjs",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
@@ -14,5 +17,7 @@
     "express": "^4.18.2",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.0.3"
-  }
+  },
+  "devDependencies": {},
+  "description for Online Fundraising": "Backend System"
 }
